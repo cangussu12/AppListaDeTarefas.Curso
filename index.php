@@ -8,16 +8,16 @@
         $conexao = new PDO($dsn, $usuario , $senha);
         
         $query = '
-            select * from tb_usuarios
+            select * from tb_usuarios where id = 2 
         ';
 
        $stmt = $conexao->query($query);
-       $lista = $stmt->fetchAll();
+       $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
        echo '<pre>';
-       print_r($lista);
+       print_r($usuario);
        echo '</pre>';
 
-        echo $lista[1]['email'];
+        echo $usuario['nome'];
 
     } catch(PDOException $e) {
         // echo '<pre>';
