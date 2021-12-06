@@ -11,19 +11,21 @@
             $conexao = new PDO($dsn, $usuario , $senha);
 
             $query = "select * from tb_usuarios where ";
-            $query .= " email = '{$_POST['usuario']}' ";
-            $query .= " AND senha = '{$_POST['senha']}' ";
-            
-            echo $query;
+            $query .= "email = :usuario";
+            $query .= " AND senha = :senha ";
 
-            $stmt = $conexao->query($query);
-            $usuario = $stmt->fetchAll();
-            echo '<hr/>';
+            $stmt = $conexao->prepare($query);
+
+            $stmt->bindValue(':usuario', $_POST['usuario']);
+            $stmt->bindValue(':senha', $_POST['senha']);
+
+            $stmt->execute();
+
+            $usuario = $stmt->fetch();
 
             echo '<pre>';
-            //print_r($usuario);
+            print_r($usuario);
             echo '</pre>';
-
         } catch(PDOException $e) {
             echo 'Erro: '. $e->getCode(). ' Mensagem: '. $e->getMessage();
             //registrar o erro de alguma forma.
