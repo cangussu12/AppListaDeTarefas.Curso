@@ -78,6 +78,7 @@
 			function marcarRealizada (id) {
 				location.href = 'todas_tarefas.php?acao=marcarRealizada&id='+id;
 			}
+
 		</script>
 
 	</head>
@@ -98,7 +99,7 @@
 					<ul class="list-group">
 						<li class="list-group-item"><a href="index.php">Tarefas pendentes</a></li>
 						<li class="list-group-item"><a href="nova_tarefa.php">Nova tarefa</a></li>
-						<li class="list-group-item active"><a href="#">Todas tarefas</a></li>
+						<li class="list-group-item active"><a href="#">Tarefas realizadas </a></li>
 					</ul>
 				</div>
 
@@ -110,20 +111,16 @@
 								<hr />
 
 								<?php foreach($tarefas as $indice => $tarefa) { ?>
+									<?php if ($tarefa->status == 'realizado') { ?>
 									<div class="row mb-3 d-flex align-items-center tarefa">
 										<div class="col-sm-9" id="tarefa_<?= $tarefa->id ?>">
 											<?= $tarefa->tarefa ?> (<?= $tarefa->status ?>)
 										</div>
 										<div class="col-sm-3 mt-2 d-flex justify-content-between">
-											<i class="fas fa-trash-alt fa-lg text-danger" onclick="remover(<?= $tarefa->id ?>)"></i>
-											
-											<? if($tarefa->status == 'pendente') { ?>
-												<i class="fas fa-edit fa-lg text-info" onclick="editar(<?= $tarefa->id ?>, '<?= $tarefa->tarefa ?>')"></i>
-												<i class="fas fa-check-square fa-lg text-success" onclick="marcarRealizada(<?= $tarefa->id ?>)"></i>
-											<? } ?>
+											<i class="fas fa-trash-alt fa-lg text-danger" onclick="remover(<?= $tarefa->id ?>)"></i>										
 										</div>
 									</div>
-
+									<?php } ?>		
 								<?php } ?>
 								
 							</div>
